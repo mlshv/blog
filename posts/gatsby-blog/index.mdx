@@ -1,0 +1,103 @@
+---
+title: Gatsby и как поднять блог на нём за один вечер
+date: '2021-05-30T15:27:34.389Z'
+description: 'Почему я решил Gatsby для своего блога и как я его настраивал'
+---
+
+<h1>{props.pageContext.frontmatter.title}</h1>
+
+После прочтения [треда Саши Беспоясова](https://twitter.com/jsunderhood/status/1388020089451163649) решил завести блог, чтобы записывать свои фронтендерские рецепты и инсайты.
+
+В качестве движка выбрал [Gatsby](https://www.gatsbyjs.com), потому что я сильно в Реакт, хочу писать в маркдауне (а ещё лучше в MDX) и деплоить статику. При выборе ещё опирался на таблицу сравнения [Gatsby vs Jekyll vs Hugo](https://www.gatsbyjs.com/features/jamstack/gatsby-vs-jekyll-vs-hugo).
+
+## Фишки и плюсы Gatsby
+
+-   Почти нулевой порог вхождения для тех, кто умеет Реакт.
+-   Может работать с CMS, а может брать данные из локальных файлов.
+-   Хорошая дока и понятные примеры.
+-   Большое комьюнити, которое пишет плагины, туториалы и поддерживает доку.
+-   Плагины с простейшим конфгом для всего, в том числе:
+    -   i18n;
+    -   Google Analytics;
+    -   offline-first;
+    -   MDX с подсветкой синтаксиса через prismjs;
+    -   RSS;
+    -   TypeScript;
+    -   оптимизация картинок с прогрессивной загрузкой и с учётом плотности пикселей экрана;
+    -   любые CSS и CSS-in-JS библиотеки.
+
+Gatsby собирает всё в статику, которую легко хостить через nginx на моём VPS.
+
+## Начало работы
+
+Есть два пути: [взять за основу шаблон](https://www.gatsbyjs.com/starters/) или [создать новый проект через CLI](https://www.gatsbyjs.com/docs/quick-start/).
+
+Я пошёл по первому, но быстро понял, что много хочу переделать, и быстрее будет поставить всё с нуля.
+
+```shell
+npm init gatsby
+```
+
+Потом поставил плагины:
+
+-   [gatsby-plugin-linaria](https://www.gatsbyjs.com/plugins/gatsby-plugin-linaria/) — для стилей
+-   [gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/) — для react-helmet
+-   [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/) — плагины для маркдауна
+-   [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) — подсветка синтаксиса в prismjs
+-   [gatsby-plugin-page-creator](https://www.gatsbyjs.com/plugins/gatsby-plugin-page-creator/) — чтобы создавать по странице на каждый `.mdx` файл
+
+Не буду описывать весь процесс, так как он довольно рутинный.
+
+Конечный результат можно посмотреть у меня на гитхабе.
+
+## Прочее
+
+### Live reload
+
+Не все изменения в проекте происходят в режиме live reload, поэтому если возникает какая-то странная ошибка, можно попробовать перезагрузить дев-сервер.
+
+### Подсветка синтаксиса
+
+Для того, чтобы заработала подсветка синтаксиса, нужно подключить тему для prismjs.
+Я создал в корне проекта файл `gatsby-browser.js` со следующим содержанием:
+
+```js
+require('prismjs/themes/prism-tomorrow.css')
+```
+
+### Resolve src
+
+Во всех своих проектах делаю импорт из `src` по абсолютному пути, чтобы избежать _relative import hell_
+
+```js
+import { globals } from '../../theme'
+// vs
+import { globals } from 'theme'
+```
+
+Я создал в корне проекта файл `gatsby-node.js` со следующим содержанием:
+
+```js
+const path = require(`path`)
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+    actions.setWebpackConfig({
+        resolve: {
+            modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        },
+    })
+}
+```
+
+### Тёмная тема
+
+Куда же без неё? Не стал пока делать ручное переключение, сделал по-простому:
+
+```css
+@media (prefers-color-scheme: dark) {
+    html {
+        background: #1b1b1b;
+        color: #fff;
+    }
+}
+```
