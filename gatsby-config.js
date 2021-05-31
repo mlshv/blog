@@ -7,7 +7,6 @@ module.exports = {
         'gatsby-plugin-linaria',
         'gatsby-plugin-image',
         'gatsby-plugin-react-helmet',
-        'gatsby-plugin-sitemap',
         {
             resolve: 'gatsby-plugin-manifest',
             options: {
