@@ -5,6 +5,7 @@ import { styled } from '@linaria/react'
 import { globals } from 'theme'
 import HelmetProvider from './HelmetProvider'
 import { StyledLayout } from './Layout'
+import Footer from './Footer'
 
 const HeaderLink = styled.a`
     color: #58a6ff !important;
@@ -65,26 +66,23 @@ const BlogPostLayout = ({ pageContext, children }) => {
     const rootPath = `${__PATH_PREFIX__}/`
 
     return (
-        <HelmetProvider title={pageContext.frontmatter.title}>
+        <HelmetProvider
+            title={pageContext.frontmatter.title}
+            description={pageContext.frontmatter.description}
+        >
             <StyledBlogPostLayout className={globals}>
                 <СontentWrap>
-                <header>
-                    <h1>
-                        <HeaderLink as={Link} title="На главную страницу" to={rootPath}>
-                            Малышев про
-                        </HeaderLink>
-                    </h1>
-                </header>
-                <main>{children}</main>
+                    <header>
+                        <h1>
+                            <HeaderLink as={Link} title="На главную страницу" to={rootPath}>
+                                Малышев про
+                            </HeaderLink>
+                        </h1>
+                    </header>
+                    <main>{children}</main>
                 </СontentWrap>
-                <footer>
-                    <div>
-                        Фидбэк, идеи, благодарочка:{' '}
-                        <a target="_blank" href="https://t.me/mlshv">
-                            t.me/mlshv
-                        </a>
-                    </div>
-                </footer>
+
+                <Footer />
             </StyledBlogPostLayout>
         </HelmetProvider>
     )

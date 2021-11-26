@@ -1,7 +1,7 @@
 module.exports = {
     siteMetadata: {
         title: 'Малышев про',
-        description: 'Блог какого-то ещё одного фронтендера.'
+        description: 'Блог какого-то ещё одного фронтендера.',
     },
     plugins: [
         'gatsby-plugin-linaria',
@@ -28,6 +28,7 @@ module.exports = {
                     posts: require.resolve('./src/components/BlogPostLayout.js'),
                 },
                 gatsbyRemarkPlugins: [
+                    'gatsby-remark-images',
                     {
                         resolve: 'gatsby-remark-prismjs',
                         options: {

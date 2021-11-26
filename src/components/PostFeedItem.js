@@ -15,19 +15,28 @@ const PostFeedItemStyled = styled.article`
         opacity: 0.5;
     }
 
-    .excerpt {
+    .description {
         margin: 12px 0;
         font-size: 18px;
     }
+
+    & + & {
+        margin-top: 24px;
+    }
 `
 
-const PostFeedItem = ({ slug, title, date, excerpt }) => {
+const PostFeedItem = ({ slug, title, date, description }) => {
     return (
         <PostFeedItemStyled>
             <h1 className="title">{title}</h1>
             <div className="date">{date}</div>
-            <div className="excerpt">{excerpt}</div>
-            <Link to={`/${slug}`}><span role="img" aria-label="">☕️</span> Читать</Link>
+            <div className="description">{description}</div>
+            <Link to={`/${slug}`}>
+                <span role="img" aria-label="">
+                    ☕️
+                </span>{' '}
+                Читать
+            </Link>
         </PostFeedItemStyled>
     )
 }

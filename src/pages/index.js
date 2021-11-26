@@ -15,7 +15,7 @@ const IndexPage = ({ data, location }) => {
                     slug={slug}
                     title={frontmatter.title}
                     date={frontmatter.date}
-                    excerpt={excerpt}
+                    description={frontmatter.description ?? excerpt}
                 />
             ))}
         </Layout>
@@ -30,6 +30,7 @@ export const query = graphql`
                 excerpt(truncate: true, pruneLength: 250)
                 frontmatter {
                     title
+                    description
                     date(formatString: "D MMMM YYYY", locale: "ru")
                 }
                 slug

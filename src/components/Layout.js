@@ -4,6 +4,7 @@ import { styled } from '@linaria/react'
 
 import { globals } from 'theme'
 import HelmetProvider from './HelmetProvider'
+import Footer from './Footer'
 
 export const StyledLayout = styled.div`
     display: flex;
@@ -66,14 +67,7 @@ const Layout = ({ location, children }) => {
                     <main>{children}</main>
                 </СontentWrap>
 
-                <footer>
-                    <div>
-                        Фидбэк, идеи, благодарочка:{' '}
-                        <a target="_blank" href="https://t.me/mlshv">
-                            t.me/mlshv
-                        </a>
-                    </div>
-                </footer>
+                <Footer />
             </StyledLayout>
         </HelmetProvider>
     )
