@@ -28,6 +28,7 @@ module.exports = {
                     posts: require.resolve('./src/components/BlogPostLayout.js'),
                 },
                 gatsbyRemarkPlugins: [
+                    'gatsby-remark-gifs',
                     'gatsby-remark-images',
                     {
                         resolve: 'gatsby-remark-prismjs',
