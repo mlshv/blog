@@ -14,7 +14,6 @@ module.exports = {
                 short_name: `malyshev.pro`,
                 start_url: `/`,
                 background_color: `#ffffff`,
-                theme_color: `#ebd913`,
                 display: `minimal-ui`,
                 icon: 'src/images/icon.png',
             },
